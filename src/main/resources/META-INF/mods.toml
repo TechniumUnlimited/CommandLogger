@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[35,)"
+license="MIT License"
+#issueTrackerURL="https://github.com/TechniumUnlimited/SeedDropControl/issues"
+[[mods]]
+modId="commandlogger"
+version="${file.jarVersion}"
+displayName="Command Logger Mod"
+# A URL to query for updates for this mod. See the JSON update specification https://mcforge.readthedocs.io/en/latest/gettingstarted/autoupdate/
+#updateJSONURL="https://change.me.example.invalid/updates.json" #optional
+#displayURL="https://www.curseforge.com/minecraft/mc-mods/seed-drop-control"
+# A file name (in the root of the mod JAR) containing a logo for display
+#logoFile="examplemod.png" #optional
+credits="Thanks Silk"
+authors="Technium"
+description='''
+Log data on commands issued
+'''
+[[dependencies.commandlogger]]
+modId="forge"
+mandatory=true
+versionRange="[35,)"
+ordering="NONE"
+side="BOTH"
+[[dependencies.commandlogger]]
+modId="minecraft"
+mandatory=true
+versionRange="[1.16.2,1.17)"
+ordering="NONE"
+side="BOTH"
