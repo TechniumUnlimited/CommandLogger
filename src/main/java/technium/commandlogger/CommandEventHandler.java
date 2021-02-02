@@ -5,7 +5,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,12 +19,12 @@ public class CommandEventHandler {
     public static Boolean logOps = Config.logOps.get();
     public static Boolean logPlayers = Config.logUsers.get();
 
-    //Gets the command, user who ran command, and position of the user
     @SubscribeEvent
     public static void onCommand(CommandEvent event) {
         Entity commandUser = event.getParseResults().getContext().getSource().getEntity();
         if (commandUser instanceof PlayerEntity) {
             if (logPlayers || logOps) {
+                //Gets the command, user who ran command, and position of the user                  Examples:
                 String commandString = event.getParseResults().getReader().getString();             // /time set day
                 String userString = event.getParseResults().getContext().getSource().getName();     // Dev
                 String userPosSTring = event.getParseResults().getContext().getSource().getPos().toString();   // (-132.07325670774682, 64.0, 24.49485178546798)
