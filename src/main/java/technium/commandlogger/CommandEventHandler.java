@@ -1,5 +1,6 @@
 package technium.commandlogger;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.CommandEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -22,30 +23,28 @@ public class CommandEventHandler {
     //Gets the command, user who ran command, and position of the user
     @SubscribeEvent
     public static void onCommand(CommandEvent event) {
-        PlayerEntity commandUser = (PlayerEntity)event.getParseResults().getContext().getSource().getEntity();
-        if (logPlayers || logOps) {
-            if (commandUser.hasPermissionLevel(4) && logOps) {
+        Entity commandUser = event.getParseResults().getContext().getSource().getEntity();
+        if (commandUser instanceof PlayerEntity) {
+            if (logPlayers || logOps) {
                 String commandString = event.getParseResults().getReader().getString();             // /time set day
                 String userString = event.getParseResults().getContext().getSource().getName();     // Dev
                 String userPosSTring = event.getParseResults().getContext().getSource().getPos().toString();   // (-132.07325670774682, 64.0, 24.49485178546798)
 
-                try {
-                    writeCommandLog("[" + dtf.format(LocalDateTime.now()) + "]: Command Issued by Op: " + commandString + " - User: " + userString + " - User Position: " + userPosSTring);
-                } catch (IOException e) {
-                    CommandLogger.LOGGER.info("New Command Logged but Failed To Be Saved:");
-                    CommandLogger.LOGGER.info("[CommandLogger]:[" + dtf.format(LocalDateTime.now()) + "]: Command Issued by Op: " + commandString + " - User: " + userString + " - User Position: " + userPosSTring);
+                if (commandUser.hasPermissionLevel(4) && logOps) {
+                    try {
+                        writeCommandLog("[" + dtf.format(LocalDateTime.now()) + "]: Command Issued by Op: " + commandString + " - User: " + userString + " - User Position: " + userPosSTring);
+                    } catch (IOException e) {
+                        CommandLogger.LOGGER.info("New Command Logged but Failed To Be Saved:");
+                        CommandLogger.LOGGER.info("[CommandLogger]:[" + dtf.format(LocalDateTime.now()) + "]: Command Issued by Op: " + commandString + " - User: " + userString + " - User Position: " + userPosSTring);
+                    }
                 }
-            }
-            if (!commandUser.hasPermissionLevel(4) && logPlayers) {
-                String commandString = event.getParseResults().getReader().getString();             // /time set day
-                String userString = event.getParseResults().getContext().getSource().getName();     // Dev
-                String userPosSTring = event.getParseResults().getContext().getSource().getPos().toString();   // (-132.07325670774682, 64.0, 24.49485178546798)
-
-                try {
-                    writeCommandLog("[" + dtf.format(LocalDateTime.now()) + "]: Command Issued: " + commandString + " - User: " + userString + " - User Position: " + userPosSTring);
-                } catch (IOException e) {
-                    CommandLogger.LOGGER.info("New Command Logged but Failed To Be Saved:");
-                    CommandLogger.LOGGER.info("[CommandLogger]:[" + dtf.format(LocalDateTime.now()) + "]: Command Issued: " + commandString + " - User: " + userString + " - User Position: " + userPosSTring);
+                if (!commandUser.hasPermissionLevel(4) && logPlayers) {
+                    try {
+                        writeCommandLog("[" + dtf.format(LocalDateTime.now()) + "]: Command Issued: " + commandString + " - User: " + userString + " - User Position: " + userPosSTring);
+                    } catch (IOException e) {
+                        CommandLogger.LOGGER.info("New Command Logged but Failed To Be Saved:");
+                        CommandLogger.LOGGER.info("[CommandLogger]:[" + dtf.format(LocalDateTime.now()) + "]: Command Issued: " + commandString + " - User: " + userString + " - User Position: " + userPosSTring);
+                    }
                 }
             }
         }
