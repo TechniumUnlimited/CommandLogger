@@ -15,7 +15,6 @@ import java.nio.file.Path;
 @Mod("commandlogger")
 public class CommandLogger {
     public static final Logger LOGGER = LogManager.getLogger();
-    public static final String MOD_ID = "commandlogger";
     public static final Path logsPath = FMLPaths.GAMEDIR.get().resolve("logs");
 
     public CommandLogger () {
